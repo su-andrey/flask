@@ -29,17 +29,18 @@ def form_sample():
                             <meta charset="utf-8">
                             <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
                             <link rel="stylesheet"
-                             href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
-                             integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
-                             crossorigin="anonymous">
-                            <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}"/>
-                            <title>Отбор астронавтов</title>
+                            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                            integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+                            crossorigin="anonymous">
+                            <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style2.css')}" />
+                            <title>Пример формы</title>
                           </head>
                           <body>
                             <h1 text-align="center">Анкета претендента</h1>
                             <h2 text-align="center">На участие в миссии</h2>
-                            <form method="post" enctype="multipart/form-data"> 
                             <div>
+                            <form class="login_form" method="post">
+                            <title>Отбор астронавтов</title>
                                     <input type="surname" class="form-control" id="surname" aria-describedby="emailHelp" placeholder="Введите фамилию" name="surname">
                                     <input type="name" class="form-control" id="name" placeholder="Введите имя" name="name">
                                     <input type="email" class="form-control" id="email" placeholder="Введите почту" name="email">
@@ -109,7 +110,6 @@ def form_sample():
                                     </div>
                                     <button type="submit" class="btn btn-primary">Записаться</button>
                             </div>
-                            </form>
                           </body>
                         </html>'''
     elif request.method == 'POST':
