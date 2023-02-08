@@ -51,6 +51,9 @@ def choice(name):
            </div>
   </body>
 </html>'''
+@app.route('/results/<nickname>/<int:level>/<float:rating>')
+def results():
+    pass
 @app.route('/form_sample', methods=['POST', 'GET'])
 def form_sample():
     if request.method == 'GET':
@@ -70,7 +73,7 @@ def form_sample():
                             <h1 text-align="center">Анкета претендента</h1>
                             <h2 text-align="center">На участие в миссии</h2>
                             <div>
-                            <form class="login_form" method="post">
+                            <form class="login_form" method="post" enctype="multipart/form-data">
                             <title>Отбор астронавтов</title>
                                     <input type="surname" class="form-control" id="surname" aria-describedby="emailHelp" placeholder="Введите фамилию" name="surname">
                                     <input type="name" class="form-control" id="name" placeholder="Введите имя" name="name">
