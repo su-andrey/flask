@@ -1,3 +1,5 @@
+import os
+
 from flask import Flask, url_for, request
 
 app = Flask(__name__)
@@ -18,6 +20,73 @@ def promotion_image():
     return f'''<title>Колонизация</title><link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style.css')}" /><h1>Жди нас, Марс</h1><img src="{url_for('static', filename='img/img.png')}" 
                    alt="здесь должна была быть картинка, но не нашлась"><h1>{'</br>'.join(['Человечество вырастает из детства.', 'Человечеству мала одна планета.',
                                                                                            'Мы сделаем обитаемыми безжизненные пока планеты.', 'И начнем с Марса!', 'Присоединяйся!'])}</h1>'''
+
+
+@app.route('/load_photo', methods=['POST', 'GET'])
+def load_photo():
+    if request.method == 'GET':
+        return f'''<!doctype html>
+                        <html lang="en">
+                          <head>
+                            <meta charset="utf-8">
+                            <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                            <link rel="stylesheet"
+                            href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                            integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+                            crossorigin="anonymous">
+                            <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style2.css')}" />
+                            <title>Отбор астронавтов</title>
+                          </head>
+                          <body>
+                          <center>
+                            <h1 text-align="center">Загрузка фото</h1>
+                            <img src="{url_for('static', filename='img/res.jpg')}" 
+                            </center>
+                            <div>
+                            <form class="login_form" method="post" enctype="multipart/form-data">
+                            <title>Отбор астронавтов</title>
+                                         <div class="form-group">
+                                            <label for="photo">Выберите файл</label>
+                                            <input type="file" class="form-control-file" id="file" name="file">
+                                         </div>
+                                    <button type="submit" class="btn btn-primary">Отправить</button>
+                            </div>
+                          </body>
+                        </html>'''
+    elif request.method == 'POST':
+        print(request.files['file'])
+        f = request.files['file']
+        out = open("static/img/res.jpg", 'wb')
+        out.write(f.read())
+        out.close()
+        return f'''<!doctype html>
+                                <html lang="en">
+                                  <head>
+                                    <meta charset="utf-8">
+                                    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+                                    <link rel="stylesheet"
+                                    href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css"
+                                    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1"
+                                    crossorigin="anonymous">
+                                    <link rel="stylesheet" type="text/css" href="{url_for('static', filename='css/style2.css')}" />
+                                    <title>Отбор астронавтов</title>
+                                  </head>
+                                  <body>
+                                  <center>
+                                    <h1 text-align="center">Загрузка фото</h1>
+                                    <img src="{url_for('static', filename='img/res.jpg')}"
+                                    </center> 
+                                    <div>
+                                    <form class="login_form" method="post" enctype="multipart/form-data">
+                                    <title>Отбор астронавтов</title>
+                                                 <div class="form-group">
+                                                    <label for="photo">Выберите файл</label>
+                                                    <input type="file" class="form-control-file" id="file" name="file">
+                                                 </div>
+                                            <button type="submit" class="btn btn-primary">Отправить</button>
+                                    </div>
+                                  </body>
+                                </html>'''
 
 
 @app.route('/choice/<name>')
