@@ -19,7 +19,38 @@ def promotion_image():
                    alt="здесь должна была быть картинка, но не нашлась"><h1>{'</br>'.join(['Человечество вырастает из детства.', 'Человечеству мала одна планета.',
                                                                                            'Мы сделаем обитаемыми безжизненные пока планеты.', 'И начнем с Марса!', 'Присоединяйся!'])}</h1>'''
 
+@app.route('/choice/<name>')
+def choice(name):
+    return f'''<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+  <h1>Мое предложение: {name}</h1>
+  <div class="alert alert-primary" role="alert"> 
+           Эта планета просто прекрсаная 
+           </div> 
+           <div class="alert alert-secondary" role="alert"> 
+           Потому что в её навание есть гласные буквы 
+           </div> 
+           <div class="alert alert-success" role="alert"> 
+           Ура солнечной системе! 
+           </div> 
+           <div class="alert alert-danger" role="alert"> 
+           Ура нашей миссии по колонизации марса!' 
+           </div> 
+           <div class="alert alert-warning" role="alert"> 
+           Преходите на /form_sample 
+           </div> 
+           </div>
+  </body>
+</html>'''
 @app.route('/form_sample', methods=['POST', 'GET'])
 def form_sample():
     if request.method == 'GET':
