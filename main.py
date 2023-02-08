@@ -1,5 +1,3 @@
-import os
-
 from flask import Flask, url_for, request
 
 app = Flask(__name__)
@@ -13,6 +11,70 @@ def main():
 @app.route('/index')
 def index():
     return "И на Марсе будут яблони цвести!"
+
+
+i = 1
+
+
+@app.route('/carousel', methods=['POST', 'GET'])
+def carousel():
+    global i
+    if request.method == 'POST':
+        i -= 1
+        return f'''<!doctype html>
+    <html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Bootstrap demo</title>
+      </head>
+      <body>
+        <div id="carouselExampleIndicators" class="carousel slide">
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="static/img/mars{i % 3 + 1}.jpg">
+        </div>
+        </div>
+      </div>
+      <form action="" method="get">
+    <button name="next" value="1">Следующий</button>
+        </form>
+        <form action="" method="post">
+    <button name="previous" value="-1">Предыдущий</button>
+        </form>
+    </div>
+      </body>
+    </html>'''
+    else:
+        i += 1
+        return f'''<html lang="en">
+      <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Bootstrap demo</title>
+      </head>
+      <body>
+        <div id="carouselExampleIndicators" class="carousel slide">
+      <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
+        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
+      </div>
+      <div class="carousel-inner">
+        <div class="carousel-item active">
+          <img src="static/img/mars{i % 3 + 1}.jpg">
+        </div>
+        </div>
+      </div>
+      <form action="" method="get">
+    <button name="next" value="1">Следующий</button>
+        </form>
+        <form action="" method="post">
+    <button name="previous" value="-1">Предыдущий</button>
+        </form>
+    </div>
+      </body>
+    </html>'''
 
 
 @app.route('/promotion_image')
