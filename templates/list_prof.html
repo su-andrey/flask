@@ -1,0 +1,10 @@
+{% extends "index.html" %}
+
+{% block content %}
+    <h2>Список профессий</h2>
+    <{{type}}>
+    {% for item in profs %}
+        <li>{{item}}</li>
+    {% endfor %}
+    </>
+{% endblock %}
