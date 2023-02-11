@@ -1,12 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css" />
     <meta charset="UTF-8">
         <title>{{ title }}</title>
     </head>
     <body>
         <h1>Миссия колонизация Марса!</h1>
         <h4>И на Марсе будут яблони цвести!</h4>
-        {% block content %}{% endblock %}
+        <img src="/static/img/emblem.png"
+               width="80" height="40">{% block content %}{% endblock %}
     </body>
 </html>

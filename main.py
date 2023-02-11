@@ -1,7 +1,10 @@
 from flask import Flask, render_template
+from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField, SubmitField
+from wtforms.validators import DataRequired
 
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 @app.route('/')
 def start():
@@ -45,6 +48,22 @@ def answer():
     param['motivation'] = 'Всегда мечтал застрять на Марсе!'
     param['ready'] = 'True'
     return render_template('auto_answer.html', **param)
+
+
+class LoginForm(FlaskForm):
+    username = StringField('id астронавта', validators=[DataRequired()])
+    password = PasswordField('Пароль', validators=[DataRequired()])
+    captain = PasswordField('id капитана', validators=[DataRequired()])
+    captain_password = PasswordField('Пароль капитана', validators=[DataRequired()])
+    submit = SubmitField('Доступ')
+
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        return 'Самоуничтожение активировано'
+    return render_template('login.html', title='Аварийный доступ', form=form)
 
 
 if __name__ == '__main__':
