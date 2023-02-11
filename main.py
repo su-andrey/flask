@@ -2,7 +2,7 @@ from flask import Flask, render_template
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired
-
+import random
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
@@ -89,6 +89,18 @@ def table(gender, age):
             color = '#FF1493'
     return render_template('table.html', name=img, color=color)
 
+
+@app.route('/member')
+def member():
+    import json
+    with open('static/img/info.json', encoding='utf-8') as json_file:
+        data = json.load(json_file)
+        info = data['persons'][random.randint(0, 4)]
+        param = {}
+        param['name'] = info['name']
+        param['img'] = info['photo']
+        param['professions'] = ','.join(sorted(info['professions']))
+        return render_template('member.html', **param)
 
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')
