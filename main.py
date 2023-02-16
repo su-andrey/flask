@@ -1,106 +1,25 @@
-from flask import Flask, render_template
-from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import DataRequired
-import random
+from flask import Flask
+
+from data import db_session
+from data.users import User
+
+db_session.global_init("db/mars_explorer.db ")
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
-
-
-@app.route('/')
-def start():
-    return 'Nothing to show here, choose another url'
-
-
-@app.route('/index/<name>')
-def name(name):
-    return render_template('index.html', title=name)
-
-
-@app.route('/training/<prof>')
-def training(prof):
-    if 'инженер' in prof or 'строитель' in prof:
-        return render_template('training.html', name='tex.png')
-    else:
-        return render_template('training.html', name='science.png')
-
-
-@app.route('/list_prof/<param>')
-def list_prof(param):
-    professions = ['штурман', 'пилот', 'экзобиолог', 'инженер - исследователь', 'строитель', 'врач', 'пилот дронов']
-    if param == 'ol':
-        return render_template('list_prof.html', profs=professions, type=param)
-    elif param == 'ul':
-        return render_template('list_prof.html', profs=professions, type=param)
-    else:
-        return 'Bad param. Use ul/ol'
-
-
-@app.route('/answer')
-@app.route('/auto_answer')
-def answer():
-    param = {}
-    param['title'] = 'Анкета'
-    param['surname'] = 'Watny'
-    param['name'] = 'Mark'
-    param['education'] = 'выше среднего'
-    param['profession'] = 'штурман марсохода'
-    param['sex'] = 'male'
-    param['motivation'] = 'Всегда мечтал застрять на Марсе!'
-    param['ready'] = 'True'
-    return render_template('auto_answer.html', **param)
-
-
-class LoginForm(FlaskForm):
-    username = StringField('id астронавта', validators=[DataRequired()])
-    password = PasswordField('Пароль', validators=[DataRequired()])
-    captain = PasswordField('id капитана', validators=[DataRequired()])
-    captain_password = PasswordField('Пароль капитана', validators=[DataRequired()])
-    submit = SubmitField('Доступ')
-
-
-@app.route('/login', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        return 'Самоуничтожение активировано'
-    return render_template('login.html', title='Аварийный доступ', form=form)
-
-
-@app.route('/distribution')
-def distribution():
-    names = ['Ридли Скотт', 'Энди Уир', 'Марк Уотни', 'Венката Капур', 'Тедди Сандрес']
-    return render_template('distribution.html', name=names)
-
-
-@app.route('/table/<gender>/<age>')
-def table(gender, age):
-    if int(age) > 21:
-        img = 'adult.png'
-        if gender == 'male':
-            color = '#000080'
-        else:
-            color = '#FF0000'
-    else:
-        img = 'baby.png'
-        if gender == 'male':
-            color = '#006400'
-        else:
-            color = '#FF1493'
-    return render_template('table.html', name=img, color=color)
-
-
-@app.route('/member')
-def member():
-    import json
-    with open('static/img/info.json', encoding='utf-8') as json_file:
-        data = json.load(json_file)
-        info = data['persons'][random.randint(0, 4)]
-        param = {}
-        param['name'] = info['name']
-        param['img'] = info['photo']
-        param['professions'] = ','.join(sorted(info['professions']))
-        return render_template('member.html', **param)
-
-if __name__ == '__main__':
-    app.run(port=8080, host='127.0.0.1')
+db_sess = db_session.create_session()
+info = [['Ridley', 'Scott', 21, 'captain', 'research engineer', 'module_1', 'scott_chief@mars.org', 'cap'],
+        ['Derek', 'Scott', 27, 'mechanic', 'mechanic', 'module_3', 'd.scott@mars.org', 'mech'],
+        ['Lewis', 'Johnson', 58, 'doctor', 'medecine', 'module_2', 'doc_lewis@mars.org', 'doc'],
+        ['Mark', 'Andreas', 34, 'scientist', 'biology', 'module_1', 'mr.anreas@mars.org', 'mab']]
+for elem in info:
+    user = User()
+    user.surname = elem[1]
+    user.name = elem[0]
+    user.age = elem[2]
+    user.position = elem[3]
+    user.speciality = elem[4]
+    user.address = elem[5]
+    user.email = elem[-2]
+    user.hashed_password = elem[-1]
+    db_sess.add(user)
+db_sess.commit()
