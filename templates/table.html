@@ -1,0 +1,13 @@
+{% extends "index.html" %}
+
+{% block content %}
+<div align="center"><h2>Оформление каюты</h2>
+    <table>
+          <colgroup>
+    <col span="1" style="background:{{color}}">
+  </colgroup>
+<tr><th>Цвет</th><th>Картинка</th></tr>
+<tr><td></td><td> <img src="/static/img/{{ name }}"
+               alt="здесь должна была быть картинка, но не нашлась"></td></tr>
+</table></div>
+{% endblock %}

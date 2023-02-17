@@ -1,0 +1,29 @@
+{
+    "persons": [
+        {
+            "name": "Энди Уир",
+            "photo": "static/img/baby.png",
+            "professions": ["Биолог", "Строитель", "Инженер", "Врач"]
+        },
+        {
+            "name": "Марк Вайт",
+            "photo": "static/img/adult.png",
+            "professions": ["Пилот", "Пилот дронов", "Строитель", "Инженер"]
+        },
+        {
+            "name": "Боб Марлон",
+            "photo": "static/img/adult.png",
+            "professions": ["Археолог", "Астогеолог", "Астробиолог", "Фотограф"]
+        },
+      {
+            "name": "Стенли Хеткинс",
+            "photo": "static/img/baby.png",
+            "professions": ["Врач", "Биолог", "Литератор", "Фотограф"]
+        },
+      {
+            "name": "Джоб Меркинс",
+            "photo": "static/img/adult.png",
+            "professions": ["Пилот дронов", "Литератор", "Пилот", "Врач"]
+        }
+    ]
+}
