@@ -1,6 +1,10 @@
 from flask import Flask, render_template
+from flask_wtf import FlaskForm
+from wtforms import StringField, BooleanField, SubmitField
+from wtforms.validators import DataRequired
 
 app = Flask(__name__)
+app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 
 @app.route('/')
@@ -31,20 +35,33 @@ def list_prof(param):
     else:
         return 'Bad param. Use ul/ol'
 
+class LoginForm(FlaskForm):
+    surname = StringField('фамилия', validators=[DataRequired()])
+    name = StringField('имя', validators=[DataRequired()])
+    education = StringField('образование', validators=[DataRequired()])
+    profession = StringField('Профессия', validators=[DataRequired()])
+    sex = StringField('пол', validators=[DataRequired()])
+    motivation = StringField('мотивация', validators=[DataRequired()])
+    ready = BooleanField('Готов остаться', validators=[DataRequired()])
+    submit = SubmitField('Отправить')
 
-@app.route('/answer')
-@app.route('/auto_answer')
-def answer():
-    param = {}
-    param['title'] = 'Анкета'
-    param['surname'] = 'Watny'
-    param['name'] = 'Mark'
-    param['education'] = 'выше среднего'
-    param['profession'] = 'штурман марсохода'
-    param['sex'] = 'male'
-    param['motivation'] = 'Всегда мечтал застрять на Марсе!'
-    param['ready'] = 'True'
-    return render_template('auto_answer.html', **param)
+
+@app.route('/answer',  methods=['GET', 'POST'])
+@app.route('/auto_answer',  methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        param = {}
+        param['title'] = 'Анкета'
+        param['surname'] = form.surname.data
+        param['name'] = form.name.data
+        param['education'] = form.education.data
+        param['profession'] = form.profession.data
+        param['sex'] = form.sex.data
+        param['motivation'] = form.motivation.data
+        param['ready'] = form.ready.data
+        return render_template('auto_answer.html', **param)
+    return render_template('login.html', title='Аварийный доступ', form=form)
 
 
 if __name__ == '__main__':
