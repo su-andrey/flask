@@ -95,12 +95,8 @@ def member():
     import json
     with open('static/img/info.json', encoding='utf-8') as json_file:
         data = json.load(json_file)
-        info = data['persons'][random.randint(0, 4)]
-        param = {}
-        param['name'] = info['name']
-        param['img'] = info['photo']
-        param['professions'] = ','.join(sorted(info['professions']))
-        return render_template('member.html', **param)
+        info = data['persons']
+        return render_template('member.html', seq=info)
 
 if __name__ == '__main__':
     app.run(port=8080, host='127.0.0.1')

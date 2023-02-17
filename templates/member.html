@@ -1,9 +1,9 @@
 {% extends "index.html" %}
 {% block content %}
+{% set info = seq|random %}
     <div align="center">
-        <h2>{{name}}</h2>
-        <img src="{{img}}">
-
-        <h4>{{professions}}</h4>
+        <h2>{{info['name']}}</h2>
+        <img src={{info['photo']}}>
+        <h2>{{info['professions']|sort}}</h2>
     </div>
 {% endblock %}
